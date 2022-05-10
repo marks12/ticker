@@ -1,26 +1,59 @@
 # ticker
-Переодический запуск функций по заданному расписанию
+Периодический запуск функций по заданному расписанию
 
 ## Использование
 
 ```go
+package main
 
-// Удаляем устаревшие данные
-func clearOldData(ctx context.Context) (err error) {
+import (
+	"context"
+	"fmt"
+	"github.com/marks12/ticker"
+	"time"
+)
 
-    err = ticker.Ticker(ctx, TickerClearCode, func(tick ticker.Tick) (err error) {
-        err = clearOldData(ctx)
-        return err
-    }, time.Hour * 24, 0)
-    
-    return
+func InitTicker() {
+
+
+	ticker.Ticker(context.Background(), "test", func(tick ticker.Tick) error {
+
+		fmt.Printf("tick: %+v\n", tick)
+		return nil
+
+	}, time.Second * 3, 0)
+
 }
 
-//...
-
-// remove old data
-func clearOldData()  {
-    // some func body
-}
+func main() {
 	
+	InitTicker()
+	
+	for {
+		fmt.Println("text ticker")
+		time.Sleep(time.Second)
+    }
+}
+```
+
+```shell
+$ go run ./main.go 
+text ticker
+text ticker
+text ticker
+tick: {Ctx:context.Background Code:test Period:3s Counter:0}
+text ticker
+text ticker
+text ticker
+tick: {Ctx:context.Background Code:test Period:3s Counter:1}
+text ticker
+text ticker
+text ticker
+tick: {Ctx:context.Background Code:test Period:3s Counter:2}
+text ticker
+text ticker
+text ticker
+tick: {Ctx:context.Background Code:test Period:3s Counter:3}
+text ticker
+
 ```
