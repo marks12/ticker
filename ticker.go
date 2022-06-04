@@ -10,11 +10,11 @@ import (
 // Tick - DTO user operation tick data
 type Tick struct {
 	// function context
-	Ctx     context.Context
+	Ctx context.Context
 	// user operation code
-	Code    string
+	Code string
 	// user operation tick period
-	Period  time.Duration
+	Period time.Duration
 	// current tick counter
 	Counter int
 }
@@ -31,10 +31,10 @@ func GetInstance() *sync.Map {
 	return tickerInstance
 }
 
-// Ticker - хелпер для запуска функции с некоторой периодичностью
+// New - создание тикера, выполняющего функцию с некоторой периодичностью
 // times - количество циклов которые отработает тикер
 // Если times=0 тикер работает бесконечно
-func Ticker(ctx context.Context, code string, function func(tick Tick) error, period time.Duration, times int) (err error) {
+func New(ctx context.Context, code string, function func(tick Tick) error, period time.Duration, times int) (err error) {
 
 	inst := GetInstance()
 
