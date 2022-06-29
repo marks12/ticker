@@ -15,14 +15,16 @@ import (
 
 func InitTicker() {
 
-
-	ticker.Ticker(context.Background(), "test", func(tick ticker.Tick) error {
+	err := ticker.New(context.Background(), "test", func(tick ticker.Tick) error {
 
 		fmt.Printf("tick: %+v\n", tick)
 		return nil
 
 	}, time.Second * 3, 0)
 
+	if err != nil {
+		fmt.Println("Can`t start ticker. Err: ", err)
+	}
 }
 
 func main() {
