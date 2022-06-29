@@ -70,7 +70,6 @@ func New(ctx context.Context, code string, function func(tick Tick) error, perio
 					// если пришел, то никаких выполнений, на выход
 					select {
 					case <-ctx.Done():
-						fmt.Printf("Cancel func %+v\n", code)
 						return
 					default:
 						_ = function(Tick{
