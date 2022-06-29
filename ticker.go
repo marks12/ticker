@@ -23,7 +23,7 @@ type Tick struct {
 var tickerInstance *sync.Map
 var once sync.Once
 
-func GetInstance() *sync.Map {
+func getInstance() *sync.Map {
 	once.Do(func() {
 		tickerInstance = &sync.Map{}
 	})
@@ -36,7 +36,7 @@ func GetInstance() *sync.Map {
 // Если times=0 тикер работает бесконечно
 func New(ctx context.Context, code string, function func(tick Tick) error, period time.Duration, times int) (err error) {
 
-	inst := GetInstance()
+	inst := getInstance()
 
 	if existsPeriod, ok := inst.Load(code); ok == true {
 		err = fmt.Errorf("Метод с кодом %s уже запущен. Вызывается с периодом %+v ", code, existsPeriod)
