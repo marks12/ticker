@@ -63,6 +63,10 @@ func New(ctx context.Context, code string, function func(tick Tick) error, perio
 
 				go func() {
 
+					if count > 0 && count == times {
+						return
+					}
+
 					time.Sleep(period)
 
 					// даже если прошел таймаут
